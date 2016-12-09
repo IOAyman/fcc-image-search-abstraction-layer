@@ -23,7 +23,7 @@ mongoose.connection.on('error', console.error)
 
 
 // routes
-app.use('/', require('./routes'))
+app.use('/api', require('./routes'))
 
 // about this project
 app.all('*', (req, res, next) => res.end(`
