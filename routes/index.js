@@ -29,6 +29,9 @@ router.all('/imagesearch/:term', (req, res, next) => {
        // parse the data I neem
        const { queries, searchInformation, items } = JSON.parse(response.body)
 
+       if (!queries.nextPage)
+         throw new Error('No more results!')
+
        // response
        res.json(items)
 
@@ -57,7 +60,10 @@ router.get('/latest/imagesearch', (req, res, next) => {
 
 
 // Woops!
-router.use((error, req, res, next) => res.json({ error }))
+router.use((error, req, res, next) => {
+  if (error.message) error = error.message
+  res.json({ error })
+})
 
 
 module.exports = router
